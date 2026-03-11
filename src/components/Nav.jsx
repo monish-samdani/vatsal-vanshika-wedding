@@ -10,11 +10,12 @@ const links = [
   { to: "/baraat", label: "Baraat", emoji: "🐴" },
   { to: "/phere", label: "Phere", emoji: "🪔" },
   { to: "/reception", label: "Reception", emoji: "✨" },
+  { to: "/timeline", label: "Timeline", emoji: "📅" },
   { to: "/gallery", label: "Gallery", emoji: "📸" }
 ];
 
 const leftLinks = links.slice(0, 5);
-const rightLinks = links.slice(5, 9);
+const rightLinks = links.slice(5, 10);
 
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
