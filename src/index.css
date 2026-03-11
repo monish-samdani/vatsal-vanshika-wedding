@@ -1,0 +1,173 @@
+:root {
+  --gold: #d4a84b;
+  --gold-light: #f0c96b;
+  --gold-dark: #a07830;
+  --rose: #c4545a;
+  --cream: #fdf6ec;
+  --deep: #0a0404;
+  --text-light: rgba(255, 255, 255, 0.92);
+  --text-muted: rgba(255, 255, 255, 0.6);
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  height: 100%;
+  overflow-x: hidden;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+body {
+  font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+    sans-serif;
+  background-color: var(--deep);
+  color: var(--text-light);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+  height: auto;
+}
+
+/* Retina: sharper image scaling on high-DPI */
+@media (-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi) {
+  img {
+    image-rendering: -webkit-optimize-contrast;
+  }
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+}
+
+/* Custom gold cursor */
+body {
+  cursor: none;
+}
+
+.vv-cursor-dot,
+.vv-cursor-ring {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  mix-blend-mode: difference;
+}
+
+.vv-cursor-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 999px;
+  background: var(--gold);
+  transform: translate(-50%, -50%);
+}
+
+.vv-cursor-ring {
+  width: 36px;
+  height: 36px;
+  border-radius: 999px;
+  border: 2px solid var(--gold-light);
+  transform: translate(-50%, -50%);
+}
+
+/* Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #120808;
+}
+
+::-webkit-scrollbar-thumb {
+  background: linear-gradient(180deg, var(--gold), var(--gold-dark));
+  border-radius: 999px;
+}
+
+/* Page transition base + retina: GPU layer for crisp rendering */
+.page {
+  min-height: 100vh;
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Floating particles */
+@keyframes floatDown {
+  0% {
+    transform: translateY(-20vh) translateX(0);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.8;
+  }
+  100% {
+    transform: translateY(110vh) translateX(0);
+    opacity: 0;
+  }
+}
+
+.particle {
+  position: fixed;
+  top: -10vh;
+  font-size: 20px;
+  opacity: 0.7;
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* Scroll fade-in */
+.fade-section {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: opacity 0.55s ease, transform 0.55s ease;
+}
+
+.fade-section.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ---- Mobile-first responsive ---- */
+/* Breakpoints: 480px, 768px, 960px */
+
+/* Touch devices: use default cursor (no custom gold cursor) */
+@media (hover: none) or (pointer: coarse) {
+  body {
+    cursor: auto;
+  }
+  .vv-cursor-dot,
+  .vv-cursor-ring {
+    display: none !important;
+  }
+}
+
+/* Page padding: smaller on mobile, standard on tablet+ */
+.page-content-wrap {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 768px) {
+  .page-content-wrap {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
