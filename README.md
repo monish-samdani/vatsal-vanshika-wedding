@@ -82,4 +82,3 @@ npm run build
 ```
 
 You can then deploy the `public/` folder to static hosting (Netlify, Vercel, etc.). Make sure history fallback is enabled because this is a SPA using React Router.
-
