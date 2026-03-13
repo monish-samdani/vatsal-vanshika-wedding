@@ -18,13 +18,13 @@ export default function TimelinePage() {
         paddingBottom: "4rem"
       }}
     >
-      <div
-        style={{
-          maxWidth: "720px",
-          margin: "0 auto",
-          padding: "0 1.5rem"
-        }}
-      >
+        <div
+          style={{
+            maxWidth: "900px",
+            margin: "0 auto",
+            padding: "0 1rem"
+          }}
+        >
         <header style={{ marginBottom: "2.5rem", textAlign: "center" }}>
           <p
             style={{

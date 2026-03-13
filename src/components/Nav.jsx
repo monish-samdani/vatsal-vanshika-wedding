@@ -1,25 +1,26 @@
 import React, { useEffect, useState } from "react";
-import { NavLink, Link } from "react-router-dom";
+import { NavLink, Link, useLocation } from "react-router-dom";
 
 const links = [
-  { to: "/", label: "Home", emoji: "🏠" },
-  { to: "/ganesh-pujan", label: "Ganesh Pujan", emoji: "🙏" },
-  { to: "/sufi-night", label: "Sufi Night", emoji: "🎤" },
-  { to: "/haldi", label: "Haldi", emoji: "💛" },
-  { to: "/sajjangoth", label: "Sajjangoth", emoji: "🌺" },
-  { to: "/baraat", label: "Baraat", emoji: "🐴" },
-  { to: "/phere", label: "Phere", emoji: "🪔" },
-  { to: "/reception", label: "Reception", emoji: "✨" },
-  { to: "/timeline", label: "Timeline", emoji: "📅" },
-  { to: "/gallery", label: "Gallery", emoji: "📸" }
+  { to: "/", label: "Home", emoji: "🏠", scrollId: null },
+  { to: "/#timeline", label: "Timeline", emoji: "📅", scrollId: "timeline" },
+  { to: "/#locations", label: "Locations", emoji: "📍", scrollId: "locations" },
+  { to: "/gallery", label: "Gallery", emoji: "📸", scrollId: null }
 ];
 
-const leftLinks = links.slice(0, 5);
-const rightLinks = links.slice(5, 10);
+const leftLinks = links.slice(0, 1);
+const rightLinks = links.slice(1, 4);
+
+function scrollToSection(id) {
+  const el = document.getElementById(id);
+  if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+}
 
 export default function Nav() {
+  const location = useLocation();
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 40);
@@ -80,12 +81,35 @@ export default function Nav() {
 
         {/* Desktop: right links */}
         <div className="nav-desktop-right">
-          {rightLinks.map((link) => (
-            <NavLink key={link.to} to={link.to} style={linkStyle}>
-              <span className="nav-link-emoji">{link.emoji}</span>
-              <span>{link.label}</span>
-            </NavLink>
-          ))}
+          {rightLinks.map((link) => {
+            if (link.scrollId && isHome) {
+              return (
+                <button
+                  key={link.to}
+                  type="button"
+                  className="nav-scroll-btn"
+                  onClick={() => { scrollToSection(link.scrollId); setOpen(false); }}
+                >
+                  <span className="nav-link-emoji">{link.emoji}</span>
+                  <span>{link.label}</span>
+                </button>
+              );
+            }
+            if (link.scrollId && !isHome) {
+              return (
+                <Link key={link.to} to={link.to} className="nav-anchor-link" style={{ ...linkStyle({ isActive: false }) }}>
+                  <span className="nav-link-emoji">{link.emoji}</span>
+                  <span>{link.label}</span>
+                </Link>
+              );
+            }
+            return (
+              <NavLink key={link.to} to={link.to} style={linkStyle}>
+                <span className="nav-link-emoji">{link.emoji}</span>
+                <span>{link.label}</span>
+              </NavLink>
+            );
+          })}
         </div>
 
         {/* Mobile hamburger */}
@@ -105,22 +129,52 @@ export default function Nav() {
       {open && (
         <div className="nav-overlay" onClick={() => setOpen(false)} role="presentation">
           <div className="nav-overlay-content" onClick={(e) => e.stopPropagation()}>
-            {links.map((link) => (
-              <NavLink
-                key={link.to}
-                to={link.to}
-                end={link.to === "/"}
-                onClick={() => setOpen(false)}
-                className="nav-overlay-link"
-                style={({ isActive }) => ({
-                  background: isActive ? "linear-gradient(135deg, var(--gold-light), var(--gold))" : "rgba(0,0,0,0.25)",
-                  color: isActive ? "#120b02" : "var(--text-light)"
-                })}
-              >
-                <span className="nav-link-emoji">{link.emoji}</span>
-                {link.label}
-              </NavLink>
-            ))}
+            {links.map((link) => {
+              if (link.scrollId && isHome) {
+                return (
+                  <button
+                    key={link.to}
+                    type="button"
+                    className="nav-overlay-link"
+                    onClick={() => { scrollToSection(link.scrollId); setOpen(false); }}
+                    style={{ background: "rgba(0,0,0,0.25)", color: "var(--text-light)" }}
+                  >
+                    <span className="nav-link-emoji">{link.emoji}</span>
+                    {link.label}
+                  </button>
+                );
+              }
+              if (link.scrollId && !isHome) {
+                return (
+                  <Link
+                    key={link.to}
+                    to={link.to}
+                    className="nav-overlay-link"
+                    onClick={() => setOpen(false)}
+                    style={{ background: "rgba(0,0,0,0.25)", color: "var(--text-light)" }}
+                  >
+                    <span className="nav-link-emoji">{link.emoji}</span>
+                    {link.label}
+                  </Link>
+                );
+              }
+              return (
+                <NavLink
+                  key={link.to}
+                  to={link.to}
+                  end={link.to === "/"}
+                  onClick={() => setOpen(false)}
+                  className="nav-overlay-link"
+                  style={({ isActive }) => ({
+                    background: isActive ? "linear-gradient(135deg, var(--gold-light), var(--gold))" : "rgba(0,0,0,0.25)",
+                    color: isActive ? "#120b02" : "var(--text-light)"
+                  })}
+                >
+                  <span className="nav-link-emoji">{link.emoji}</span>
+                  {link.label}
+                </NavLink>
+              );
+            })}
           </div>
         </div>
       )}
@@ -231,6 +285,30 @@ export default function Nav() {
           transition: background 0.2s ease, color 0.2s ease;
         }
         .nav-link-emoji { font-size: 1.15rem; }
+        .nav-scroll-btn,
+        .nav-anchor-link {
+          padding: 0.35rem 0.85rem;
+          border-radius: 999px;
+          display: flex;
+          align-items: center;
+          gap: 0.3rem;
+          font-size: 0.8rem;
+          font-weight: 500;
+          letter-spacing: 0.06em;
+          text-transform: uppercase;
+          font-family: "Playfair Display", serif;
+          color: rgba(255,255,255,0.92);
+          background: transparent;
+          border: 1px solid rgba(255,255,255,0.12);
+          transition: all 0.28s ease;
+          cursor: pointer;
+          text-decoration: none;
+        }
+        .nav-scroll-btn:hover,
+        .nav-anchor-link:hover {
+          border-color: rgba(212,168,75,0.4);
+          color: var(--gold-light);
+        }
         @media (min-width: 960px) {
           .nav-desktop-left, .nav-desktop-right { display: flex; }
           .nav-hamburger { display: none; }
