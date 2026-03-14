@@ -57,9 +57,17 @@ export default function Nav() {
         </button>
       </nav>
 
-      {/* Mobile overlay */}
+      {/* Fullscreen overlay */}
       {open && (
         <div className="nav-overlay" onClick={() => setOpen(false)} role="presentation">
+          <button
+            type="button"
+            aria-label="Close menu"
+            className="nav-overlay-close"
+            onClick={() => setOpen(false)}
+          >
+            ✕
+          </button>
           <div className="nav-overlay-content" onClick={(e) => e.stopPropagation()}>
             {links.map((link) => (
               <NavLink
@@ -152,36 +160,61 @@ export default function Nav() {
         }
         .nav-overlay {
           position: fixed;
-          inset: 0;
-          background: rgba(6,2,2,0.96);
-          z-index: 50;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          height: 100dvh;
+          max-width: 100%;
+          background: rgba(10, 0, 0, 0.96);
+          z-index: 9999;
           display: flex;
           align-items: center;
           justify-content: center;
           padding: 2rem;
+          box-sizing: border-box;
+        }
+        .nav-overlay-close {
+          position: absolute;
+          top: 1.25rem;
+          right: 1.25rem;
+          width: 48px;
+          height: 48px;
+          padding: 0;
+          background: transparent;
+          border: none;
+          color: var(--gold-light);
+          font-size: 2rem;
+          line-height: 1;
+          cursor: pointer;
+          z-index: 10;
+          display: flex;
+          align-items: center;
+          justify-content: center;
         }
         .nav-overlay-content {
           display: flex;
           flex-direction: column;
-          gap: 0.75rem;
+          align-items: center;
+          justify-content: center;
+          gap: 2.5rem;
           width: 100%;
-          max-width: 320px;
+          max-width: 360px;
         }
         .nav-overlay-link {
           display: flex;
           align-items: center;
-          gap: 0.6rem;
+          gap: 0.75rem;
           padding: 0.85rem 1.25rem;
           border-radius: 12px;
           font-family: "Playfair Display", serif;
-          font-size: 1rem;
+          font-size: 1.8rem;
           font-weight: 500;
           letter-spacing: 0.06em;
           text-transform: uppercase;
           border: 1px solid rgba(212,168,75,0.3);
           transition: background 0.2s ease, color 0.2s ease;
         }
-        .nav-link-emoji { font-size: 1.15rem; }
+        .nav-link-emoji { font-size: 1.5rem; }
         @media (min-width: 960px) {
           .nav-bar { justify-content: space-between; padding: 0.85rem 1.5rem; }
         }

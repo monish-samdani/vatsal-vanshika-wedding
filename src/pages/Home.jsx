@@ -314,6 +314,7 @@ export default function Home() {
           background: #FFFDF5;
           scroll-margin-top: 4rem;
           overflow-x: hidden;
+          max-width: 100%;
         }
         .home-celebrations-bg {
           position: absolute;
@@ -386,7 +387,12 @@ export default function Home() {
         .home-celebrations-petals {
           position: absolute;
           inset: 0;
+          left: 0;
+          right: 0;
+          width: 100%;
+          max-width: 100%;
           pointer-events: none;
+          overflow: hidden;
         }
         .home-celebrations-petal {
           position: absolute;

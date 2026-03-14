@@ -92,7 +92,12 @@ export default function TimelinePage() {
         }
         .timeline-page-bg {
           position: fixed;
-          inset: 0;
+          top: 0;
+          left: 0;
+          right: 0;
+          bottom: 0;
+          width: 100vw;
+          max-width: 100%;
           pointer-events: none;
           z-index: 0;
           background:
@@ -160,9 +165,14 @@ export default function TimelinePage() {
         }
         .timeline-petals {
           position: fixed;
-          inset: 0;
+          top: 0;
+          left: 0;
+          width: 100vw;
+          max-width: 100%;
+          height: 100vh;
           pointer-events: none;
           z-index: 2;
+          overflow: hidden;
         }
         .timeline-petal {
           position: absolute;

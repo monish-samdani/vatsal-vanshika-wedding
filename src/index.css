@@ -15,26 +15,29 @@
   box-sizing: border-box;
 }
 
-html,
+html {
+  margin: 0;
+  padding: 0;
+  overflow-x: hidden;
+}
+
 body {
   margin: 0;
   padding: 0;
   height: 100%;
   overflow-x: hidden;
-}
-
-#root {
-  min-height: 100vh;
-}
-
-body {
   font-family: "Poppins", system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
     sans-serif;
   background-color: var(--deep);
   color: var(--text-light);
-  overflow-x: hidden;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+}
+
+#root {
+  min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden;
 }
 
 img {
@@ -105,6 +108,8 @@ body {
 /* Page transition base + retina: GPU layer for crisp rendering */
 .page {
   min-height: 100vh;
+  max-width: 100%;
+  overflow-x: hidden;
   -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
 }
