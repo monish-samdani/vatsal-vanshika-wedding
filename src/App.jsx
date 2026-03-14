@@ -12,6 +12,7 @@ import Baraat from "./pages/Baraat";
 import Phere from "./pages/Phere";
 import Reception from "./pages/Reception";
 import Gallery from "./pages/Gallery";
+import Timeline from "./pages/Timeline";
 
 function CustomCursor() {
   useEffect(() => {
@@ -66,6 +67,7 @@ export default function App() {
           <Route path="/phere" element={<Phere />} />
           <Route path="/reception" element={<Reception />} />
           <Route path="/gallery" element={<Gallery />} />
+          <Route path="/timeline" element={<Timeline />} />
         </Routes>
       </AnimatePresence>
     </>

@@ -13,9 +13,6 @@ const links = [
   { to: "/gallery", label: "Gallery", emoji: "📸" }
 ];
 
-const leftLinks = links.slice(0, 5);
-const rightLinks = links.slice(5, 9);
-
 export default function Nav() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
@@ -30,38 +27,9 @@ export default function Nav() {
     document.body.style.overflow = open ? "hidden" : "";
   }, [open]);
 
-  const linkStyle = ({ isActive }) => ({
-    padding: "0.35rem 0.85rem",
-    borderRadius: 999,
-    display: "flex",
-    alignItems: "center",
-    gap: "0.3rem",
-    fontSize: "0.8rem",
-    fontWeight: 500,
-    letterSpacing: "0.06em",
-    textTransform: "uppercase",
-    fontFamily: "'Playfair Display', serif",
-    color: isActive ? "#1a1205" : "rgba(255,255,255,0.92)",
-    background: isActive ? "linear-gradient(135deg, var(--gold-light), var(--gold))" : "transparent",
-    boxShadow: isActive ? "0 8px 24px rgba(0,0,0,0.4)" : "none",
-    border: `1px solid ${isActive ? "transparent" : "rgba(255,255,255,0.12)"}`,
-    transition: "all 0.28s ease"
-  });
-
   return (
     <header className={`nav-header ${scrolled ? "nav-header--scrolled" : ""}`}>
       <nav className="nav-bar">
-        {/* Desktop: left links */}
-        <div className="nav-desktop-left">
-          {leftLinks.map((link) => (
-            <NavLink key={link.to} to={link.to} end={link.to === "/"} style={linkStyle}>
-              <span className="nav-link-emoji">{link.emoji}</span>
-              <span>{link.label}</span>
-            </NavLink>
-          ))}
-        </div>
-
-        {/* Center logo / heart */}
         <Link to="/" className="nav-logo-wrap">
           <img
             src="/logo.png"
@@ -77,17 +45,6 @@ export default function Nav() {
           <span className="nav-logo-fallback">♥</span>
         </Link>
 
-        {/* Desktop: right links */}
-        <div className="nav-desktop-right">
-          {rightLinks.map((link) => (
-            <NavLink key={link.to} to={link.to} style={linkStyle}>
-              <span className="nav-link-emoji">{link.emoji}</span>
-              <span>{link.label}</span>
-            </NavLink>
-          ))}
-        </div>
-
-        {/* Mobile hamburger */}
         <button
           type="button"
           aria-label="Open menu"
@@ -148,11 +105,6 @@ export default function Nav() {
           padding: 0.75rem 1.25rem;
           max-width: 1200px;
           margin: 0 auto;
-        }
-        .nav-desktop-left, .nav-desktop-right {
-          display: none;
-          align-items: center;
-          gap: 0.4rem;
         }
         .nav-logo-wrap {
           display: flex;
@@ -231,12 +183,7 @@ export default function Nav() {
         }
         .nav-link-emoji { font-size: 1.15rem; }
         @media (min-width: 960px) {
-          .nav-desktop-left, .nav-desktop-right { display: flex; }
-          .nav-hamburger { display: none; }
           .nav-bar { justify-content: space-between; padding: 0.85rem 1.5rem; }
-          .nav-logo-wrap { order: 0; flex: 0 0 auto; }
-          .nav-desktop-left { order: -1; flex: 1; justify-content: flex-end; }
-          .nav-desktop-right { order: 1; flex: 1; justify-content: flex-start; }
         }
         @media (max-width: 479px) {
           .nav-bar { padding: 0.6rem 1rem; }
